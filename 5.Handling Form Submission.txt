@@ -1,0 +1,42 @@
+                                    5.HANDLING THE FORM SUBMISSION
+
+To submit the form :-
+        * useFormik parameter obj takes the onSubmit method as with vales(last value) as parameter.
+        * we can access the onSubmit method in the initialValue obj using [formik.handleSubmit].
+
+In YOUTUBE.js
+
+import React from 'react';
+import { useFormik } from 'formik' //importing
+
+    const YouTubeForm = () =>{
+
+        const formik = useFormik({
+            initialValue : {
+                name : '',
+                email: '',
+                channel : '',
+            },
+            onSubmit : values =>{
+                console.log('form data', values) // log the values of the field at the time of SUBMISSION 
+            }
+        });
+
+
+        return(
+            <div>
+                <form onSubmit={formik.handleSubmit}>
+                    <label htmlFor='name'>Name</label>
+                    <input type='text' id='name' name='name' onChange={formik.handleChange} value={formik.values.name}/>
+
+                    <label htmlFor='email'>Name</label>
+                    <input type='text' id='email' name='email' onChange={formik.handleChange} value={formik.values.email}/>
+
+                    <label htmlFor='channel'>Name</label>
+                    <input type='text' id='channel' name='channel' onChange={formik.handleChange} value={formik.values.channel}/>
+
+                    <button type='submit' className='btn'>submit</button>
+                </form>
+            </div>
+        )
+    }

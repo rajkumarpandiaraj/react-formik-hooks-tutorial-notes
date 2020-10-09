@@ -1,0 +1,42 @@
+                                                2.SIMPLE FORM
+
+creating utube form with three fields
+        * Name
+        * Email
+        * ChannelName
+        * submit btn
+
+Our goal is implementing three things :-
+    1.Managing the form Data
+    2.Handing the form submission
+    3.Validation and error message
+
+
+created react app using create-react-app
+
+In component folder YOUTUBEFORM.js is created
+
+In YOUTUBEFORM.js(func component)
+
+import React from 'react'
+    const YoutubeForm = () =>{
+        return(
+            <div>
+                <form>
+                    <label htmlFor='name'>Name</label>
+                    <input type='text' id='name' name='name'/>
+
+                    <label htmlFor='email'>Name</label>
+                    <input type='text' id='email' name='email'/>
+
+                    <label htmlFor='channel'>Name</label>
+                    <input type='text' id='channel' name='channel'/>
+
+                    <button className='btn'>submit</button>
+                </form>
+            </div>
+        )
+    }
+
+
+Simple css style is added to the Form

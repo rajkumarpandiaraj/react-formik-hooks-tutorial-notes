@@ -1,0 +1,50 @@
+                                                4.MANAGING THE FORM STATE
+
+-> Here we gonna create a state for the form's name,email and channel field and eventchangeHandle for that using useformik.
+
+-> useFormik hook takes an obj of initialValue obj as arg and returns an obj with values obj and handleChange method.
+
+formik.values :-
+        * formik.values is an obj contains all the values of the form.
+
+formik.handleChange :-
+        * formik.handleChange is a method handles an change event of th respective form values.
+
+Now,if we type in the form field the values get updated in the state also.
+
+MANAGING the state is done.
+
+In YOUTUBE.js
+
+import React from 'react';
+import { useFormik } from 'formik' //importing
+
+    const YouTubeForm = () =>{
+
+        const formik = useFormik({
+            initialValue : {
+                name : '',
+                email: '',
+                channel : '',
+            }
+        });
+
+        console.log(formik.values)
+
+        return(
+            <div>
+                <form>
+                    <label htmlFor='name'>Name</label>
+                    <input type='text' id='name' name='name' onChange={formik.handleChange} value={formik.values.name}/>
+
+                    <label htmlFor='email'>Name</label>
+                    <input type='text' id='email' name='email' onChange={formik.handleChange} value={formik.values.email}/>
+
+                    <label htmlFor='channel'>Name</label>
+                    <input type='text' id='channel' name='channel' onChange={formik.handleChange} value={formik.values.channel}/>
+
+                    <button className='btn'>submit</button>
+                </form>
+            </div>
+        )
+    }
