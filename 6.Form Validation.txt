@@ -1,0 +1,7 @@
+                                        6.FORM VALIDATION
+
+Here we gonna add the validation for the FORM
+
+The validation rules are :-
+    * adding required rule for all the three fields.
+    * and gonna add the email format validator(regEx) fro the email field only.

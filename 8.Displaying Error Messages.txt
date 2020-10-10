@@ -1,0 +1,91 @@
+                                            8.DISPLAYING ERROR MESSAGE
+
+console.log('formikErrors', formik.errors)
+console.log('formikValues', formik.values)
+        -> Lyk formik.values, formik.errors is also an object log the error values for the repective field.
+example :
+logging error values
+        {
+            name : 'required',
+            email : 'required',
+            channel : 'required',
+        }
+
+using conditional rendering error for the respective field
+
+after setting the program
+    Now, if change the form state the errors displays,
+
+But the problem here is the error message is displayed for every field, which we are not entered also,
+
+fix this in next topic
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+In YOUTUBE.js
+
+import React from 'react';
+import { useFormik } from 'formik' //importing
+
+    const YouTubeForm = () =>{
+
+        const formik = useFormik({
+            initialValue : {
+                name : '',
+                email: '',
+                channel : '',
+            },
+            onSubmit : values =>{
+                console.log('form data', values) // log the values of the field at the time of SUBMISSION 
+            },
+            validate : values => {
+                    let errors = {}
+
+                    if(!values.name){
+                        errors.name = 'required'
+                    }
+
+                    if(!values.email){
+                        errors.email = 'required'
+                    }else if(RegEx.test(values.email)){
+                        errors.email = 'INVALID format'
+                    }
+
+                    if(!values.channel){
+                        errors.channel = 'required'
+                    }
+
+                    return errors
+            }
+        });
+
+
+        return(
+            <div>
+                <form onSubmit={formik.handleSubmit}>
+                    <label htmlFor='name'>Name</label>
+                    <input type='text' id='name' name='name' onChange={formik.handleChange} value={formik.values.name}/>
+                    {
+                        formik.errors.name? <div className='errors'>{formik.errors.name}</div> : null
+                    }
+
+
+                    <label htmlFor='email'>Name</label>
+                    <input type='text' id='email' name='email' onChange={formik.handleChange} value={formik.values.email}/>
+                    {
+                        formik.errors.email? <div className='errors'>{formik.errors.email}</div> : null
+                    }
+
+
+                    <label htmlFor='channel'>Name</label>
+                    <input type='text' id='channel' name='channel' onChange={formik.handleChange} value={formik.values.channel}/>
+                    {
+                        formik.errors.channel? <div className='errors'>{formik.errors.channel}</div> : null
+                    }
+
+                    <button type='submit' className='btn'>submit</button>
+                </form>
+            </div>
+        )
+    }
