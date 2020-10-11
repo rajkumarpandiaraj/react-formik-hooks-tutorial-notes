@@ -1,0 +1,97 @@
+                            11.SCHEMA VALIDATION WITH YUP(Library)
+
+Here, we gonna replace the validate method with the ValidationSchema from yup.
+
+ValidationSchema is the yup Obj takes an obj of validation errors and conditions.
+
+INSTALLATION :-
+        npm i yup
+
+Example :-
+const ValidationSchema = Yup.object({
+    field_name : condition and error message
+})
+///////////////////////////////////////////////////////////////////////////
+
+In YOUTUBE.js
+
+import React from 'react';
+import { useFormik } from 'formik' //importing
+
+    const YouTubeForm = () =>{
+
+        const formik = useFormik({
+            initialValue : {
+                name : '',
+                email: '',
+                channel : '',
+            },
+            onSubmit : values =>{
+                console.log('form data', values) // log the values of the field at the time of SUBMISSION 
+            },
+/////////////////validate : values => {
+                    let errors = {}
+
+                    if(!values.name){
+                        errors.name = 'required'
+                    }
+
+                    if(!values.email){
+                        errors.email = 'required'
+                    }else if(RegEx.test(values.email)){
+                        errors.email = 'INVALID format'
+                    }
+
+                    if(!values.channel){
+                        errors.channel = 'required'
+                    }
+
+                    return errors
+            }/////////////////////////////////////////////////////////////// Commenting out
+
+            ValidationSchema : Yup.object({
+                name : Yup.string().required('Required'),
+                email : Yup.string().email('Invalid format').required('Required'),
+                channel : Yup.string().required('Required'),               
+            })
+        });
+
+                console.log('Field Visited', formik.touched) // IF WE CLICKED IN THE FILED BOX AND CLICKED OUT THE FILED BOX
+                                                                        IT DISPLAYS true, OTHERWISE IT DISPLAYS FALSE
+        return(
+            <div>
+                <form onSubmit={formik.handleSubmit}>
+                    <label htmlFor='name'>Name</label>
+                    <input type='text' id='name' name='name' 
+                    onChange={formik.handleChange} 
+                    value={formik.values.name}
+                    onBlur={formik.handleBlur}/>
+                    {
+                        formik.touched.name && formik.errors.name? <div className='errors'>{formik.errors.name}</div> : null
+                    }
+
+
+                    <label htmlFor='email'>Name</label>
+                    <input type='text' id='email' name='email' 
+                    onChange={formik.handleChange} 
+                    value={formik.values.email}
+                    onBlur={formik.handleBlur}/>
+                    {
+                        formik.touched.email && formik.errors.email? <div className='errors'>{formik.errors.email}</div> : null
+                    }
+
+
+                    <label htmlFor='channel'>Name</label>
+                    <input type='text' id='channel' name='channel' 
+                    onChange={formik.handleChange} 
+                    value={formik.values.channel}
+                    onBlur={formik.handleBlur}/>
+                    {
+                        formik.touched.channel && formik.errors.channel? <div className='errors'>{formik.errors.channel}</div> : null
+                    }
+
+                    <button type='submit' className='btn'>submit</button>
+                </form>
+            </div>
+        )
+    }

@@ -1,0 +1,97 @@
+                                        13.FORMIK COMPONENT
+
+Formik component :-
+    -> formik component replaces useFormik hook.
+To replace:-
+        Three Steps
+            1.import Formik instead of useFormik from 'formik'
+            2.clear the useFormik() callback.
+            3.wrap the whole form with Formik component and the initialValues, onsubmit, validate as props
+
+/////////////////////////////////////////////////////////////////////
+
+[REFACTORING]
+
+In YOUTUBE.js
+
+import React from 'react';
+import { Formik } from 'formik' //importing
+
+    const YouTubeForm = () =>{
+
+        const initialValues = {
+            name : '',
+            email : '',
+            channel : ''
+        }
+
+        const onSubmit = values =>{
+            console.log('form data', values) // log the values of the field at the time of SUBMISSION 
+        }
+
+/////////const validate = values => {
+                    let errors = {}
+
+                    if(!values.name){
+                        errors.name = 'required'
+                    }
+
+                    if(!values.email){
+                        errors.email = 'required'
+                    }else if(RegEx.test(values.email)){
+                        errors.email = 'INVALID format'
+                    }
+
+                    if(!values.channel){
+                        errors.channel = 'required'
+                    }
+
+                    return errors
+            }/////////////////////////////////////////////////////////////// Commenting out
+
+            const ValidationSchema = Yup.object({
+                name : Yup.string().required('Required'),
+                email : Yup.string().email('Invalid format').required('Required'),
+                channel : Yup.string().required('Required'),               
+            })
+
+            console.log('Field Visited', formik.touched) // IF WE CLICKED IN THE FILED BOX AND CLICKED OUT THE FILED BOX
+                                                                        IT DISPLAYS true, OTHERWISE IT DISPLAYS FALSE
+        return(
+            <Formik 
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                ValidationSchema={ValidationSchema}
+                >
+                <form onSubmit={formik.handleSubmit}>
+                    <label htmlFor='name'>Name</label>
+                    <input type='text' id='name' name='name' 
+                    {...formik.getFieldProps('name')}
+                    />
+                    {
+                        formik.touched.name && formik.errors.name? <div className='errors'>{formik.errors.name}</div> : null
+                    }
+
+
+                    <label htmlFor='email'>Name</label>
+                    <input type='text' id='email' name='email' 
+                    {...formik.getFieldProps('email')}
+                    />
+                    {
+                        formik.touched.email && formik.errors.email? <div className='errors'>{formik.errors.email}</div> : null
+                    }
+
+
+                    <label htmlFor='channel'>Name</label>
+                    <input type='text' id='channel' name='channel' 
+                    {...formik.getFieldProps('channel')}
+                    />
+                    {
+                        formik.touched.channel && formik.errors.channel? <div className='errors'>{formik.errors.channel}</div> : null
+                    }
+
+                    <button type='submit' className='btn'>submit</button>
+                </form>
+            </Formik>
+        )
+    }
