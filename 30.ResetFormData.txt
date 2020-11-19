@@ -1,0 +1,12 @@
+                                                30.RESET FORM DATA
+
+There are two way to reset the form DATA
+        1.button with type='reset' to reset the form data
+            eg :
+                <button type='reset'>RESET</button>
+        2.After submitting the form.
+            eg :
+            const onSubmit = (values, onSubmitOwnProps) =>{
+                onSubmitOwnProps.setSubmitting(false);
+                onSubmitOwnProps.resetForm();
+            }

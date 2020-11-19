@@ -1,0 +1,39 @@
+                                        32.FORMIK CONTAINER COMPONENT
+
+New react app is created and yup and formik packages are installed.
+
+In Component folder :
+            -> FormikContainer.js
+
+
+and added styling to FormikContainer and add the FormikContainer in App.js 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+In FormikContainer.js
+
+
+    import React from 'react';
+    import { Formik,Form } from 'Formik'
+    import * as Yup from 'yup';
+
+    const FormikContainer = () =>{
+        const initialvalues = {}
+        const validationSchema = Yup.object({})
+        const onSubmit = values =>{
+            console.log(values);
+        }
+        <Formik
+            initialvalues={initialvalues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+        >
+            {
+                formik => {
+                    <Form>
+                        <button type='submit'>Submit</button>
+                    </Form>
+                }
+            }
+        </Formik>
+    }
+
+    export default FormikContainer

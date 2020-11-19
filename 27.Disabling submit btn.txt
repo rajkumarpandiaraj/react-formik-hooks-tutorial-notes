@@ -1,0 +1,74 @@
+                                            27.Disabling the Submit Button
+
+TWO SCENARIOUS :
+    1.Validity of the state.
+    2.Form submission in process.
+
+                                                1.VALIDITY OF THE STATE
+
+    ->Disabling the submit based on the form validation.
+
+disabling the submit button if the form state is Invalid
+        There is a property in the formik obj called isValid.
+        isValid = true => if errors obj is empty{}.
+
+    On page load error obj is empty => isvalid = true.
+    if the error obj is not empty => isValid = true.
+
+    Based on the isValid property disabling the submit button.
+
+eg :-
+    <button type='submit' disabled={!formik.isValid}>Submit</button>
+
+On page Load, we can access the submit button, onChange the field value or bluring out field, make the error obj != empty
+    and makes the isValid property to false => that makes disabled = true and submit got disabled.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Validate on mount:-
+    still now Validate func runs only if the change in the field or submission of the form.
+    this is why on page load, submit button got enabled.
+    To disable the submit, at the time of page load, we have to run the validate func at the tym of page load.
+    To run the validate func at the tym of page load, send validateOnMount as prop to Formik component
+
+eg :-
+        <Formik 
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            ValidationSchema={ValidationSchema}
+            validateOnMount>
+                {
+                    formik =>{
+                        retutn <Form>
+                                    ....
+                                    ......
+                                    .........
+                                    .................
+                                </Form>
+                    }
+                }
+        <Formik/>
+
+Now, on page load, validate func got executed and form button got disabled
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

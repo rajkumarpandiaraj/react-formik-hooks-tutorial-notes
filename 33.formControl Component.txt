@@ -1,0 +1,28 @@
+                                    33.FORM CONTROL COMPONENT
+
+FormikControl.js is created in Component folder.
+    This file renders the field based on the control(prop) with Switch case.
+
+In Component Folder :
+        FormikContainer.js
+    ->  FormikControl.js
+
+////////////////////////////////////////////////////////////////////////
+In FormikControl.js
+
+import React from 'react'
+
+const FormikControl = props =>{
+    const { control, ...rest } = props;
+    switch(controls) {
+        case 'input' :
+        case 'textarea' :
+        case 'select' :
+        case 'radio' :
+        case 'checkbox' :
+        case 'date' :
+        default : return null
+    }
+}
+
+export default FormikControl

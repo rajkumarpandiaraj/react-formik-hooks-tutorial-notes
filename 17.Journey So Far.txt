@@ -1,0 +1,11 @@
+                                                17. JOURNEY SO FAR
+
+1.Simple form with three fields
+2.useFormik hook.
+3.Managing form state, handling form submission and form validation.
+4.InitialValues Obj + formik.handleChange.
+5.onSubmit method + formik.handleSubmit.
+6.Validate function.
+7.validationSchema Obj.
+8.formik.errors and formik.touched.
+9.Formik component - Formik, Form, Field and ErrorMessage.

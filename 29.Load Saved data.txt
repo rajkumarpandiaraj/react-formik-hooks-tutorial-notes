@@ -1,0 +1,50 @@
+                                                29. LOAD SAVED DATA
+
+Loading the form data from the api.
+
+steps to do that :-
+        1.create the saved data object
+        2.create var called formValues and set it to null
+        3.assign the initailValue in the Formik component with condition and add enableReinitialize
+
+1.create the saved data object
+    const savedData =  {
+            name : 'rk',
+            email : 'sk@gmail',
+            channel : 'yoyo',
+            Social : {
+                twitter : '',
+                faceBook : ''
+            },
+            phoneNumber : ['',''],
+            phNumbers
+        }
+
+2.create var called formValues and set it to null
+    const [formValues, setFormValues] = useState(null)
+
+3.assign the initialValue in the Formik component with condition
+
+eg :-
+        <Formik 
+            initialValues={formValues || initialValues }
+            onSubmit={onSubmit}
+            ValidationSchema={ValidationSchema}
+            enableReinitialize>
+                {
+                    formik =>{
+                        retutn <Form>
+                                    ....
+                                    ......
+                                    .........
+                                    .................
+                                </Form>
+                    }
+                }
+        <Formik/>
+
+4.Click this btn set the formValues as savedData
+    <button type='button' onClick={()=> setFormValues(savedData)}>add saved data</button>
+
+
+

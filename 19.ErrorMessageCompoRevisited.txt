@@ -1,0 +1,133 @@
+                                    19.ERROR MESSAGE COMPONENT REVISITED
+
+COMPONENT PROP AND RENDER PROP METHOD :-
+
+Component props :-
+        ErrorMessage Component takes component props.
+
+eg :-
+    <ErrorMessage name='email' component={TextError}>
+    
+
+In TextError.js
+    import React from 'react'
+    const TextError = (props) =>{
+        return (
+            <div className='error'>
+            {
+                props.children
+            }
+            </div>
+        )
+    }
+
+////////////////////////////////////////////////////////////////////
+
+Render Props method :-
+    In render props method, ErrorMessage component takes function as children
+
+eg:
+    <ErrorMessage name='channel'>
+    {
+        errormsg => <div className='error'>{errormsg}</div>
+    }
+    </ErrorMessage>
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+In YOUTUBE.js
+
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik' //importing
+
+    const YouTubeForm = () =>{
+
+        const initialValues = {
+            name : '',
+            email : '',
+            channel : ''
+        }
+
+        const onSubmit = values =>{
+            console.log('form data', values) // log the values of the field at the time of SUBMISSION 
+        }
+
+/////////const validate = values => {
+                    let errors = {}
+
+                    if(!values.name){
+                        errors.name = 'required'
+                    }
+
+                    if(!values.email){
+                        errors.email = 'required'
+                    }else if(RegEx.test(values.email)){
+                        errors.email = 'INVALID format'
+                    }
+
+                    if(!values.channel){
+                        errors.channel = 'required'
+                    }
+
+                    return errors
+            }/////////////////////////////////////////////////////////////// Commenting out
+
+            const ValidationSchema = Yup.object({
+                name : Yup.string().required('Required'),
+                email : Yup.string().email('Invalid format').required('Required'),
+                channel : Yup.string().required('Required'),               
+            })
+
+            console.log('Field Visited', formik.touched) // IF WE CLICKED IN THE FILED BOX AND CLICKED OUT THE FILED BOX
+                                                                        IT DISPLAYS true, OTHERWISE IT DISPLAYS FALSE
+        return(
+            <Formik 
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                ValidationSchema={ValidationSchema}
+                >
+                <Form>
+                    <label htmlFor='name'>Name</label>
+                    <Field type='text' id='name' name='name' 
+                    />
+                    <ErrorMessage name='name'/>
+
+
+
+                    <label htmlFor='email'>Name</label>
+                    <Field type='text' id='email' name='email' placeholder='Email'/> //////// additional props
+                    <ErrorMessage name='email' component={TextError}>
+
+
+                    <label htmlFor='channel'>Name</label>
+                    <Field type='text' id='channel' name='channel' 
+                    />
+                    <ErrorMessage name='channel'>
+                        {
+                            errormsg => <div className='error'>{errormsg}</div>
+                        }
+                    </ErrorMessage>
+                    
+                    <label htmlFor='comment'>Comments</label>
+                    <Field as='textarea' id='comment' name='comment'/> ///////// as props
+
+
+                    <label htmlForm='address'>Address</label>  ///////////Render Props method
+                    <Field name='address'>
+                        {
+                            props => {
+                                const {field, form, meta} = props;
+                                console.log('render Props', props);
+                                return <div>
+                                        <input id='address' type='text' {...field}/>
+                                        {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+                                        </div>
+                            }
+                        }
+                    </Field>
+
+                    <button type='submit' className='btn'>submit</button>
+                </Form>
+            </Formik>
+        )
+    }

@@ -1,0 +1,11 @@
+                                        23.FAST FIELD COMPONENT.
+
+FASTFIELD :-
+    -> Fast Field Component replace the Field component.
+    -> Field component re-renders the whole form when there is a change in the form state.
+    -> fast component re-renders only there is change in the corresponding field statevalue.
+
+WWARNING :-
+    There are so many limitations in using the fast component, read the documentation.
+
+import { FastField } from 'formik'

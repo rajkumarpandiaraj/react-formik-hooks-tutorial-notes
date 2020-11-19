@@ -1,0 +1,188 @@
+                                                37.CHECKBOX [Render Props method Different]
+
+To create form elements, there are three main steps :
+        1.Defining the Field
+        2.Returning that Field in FormikControl
+        3.calling the FormikControl in FormikContainer and  adding the initialValues
+    
+Props Required to the Select field :-
+        1.label = 'Select one Option'
+        2.name = 'radioOption'
+        3.radioOptions = [{key,value}]
+
+In Components folder
+        FormikContainer.js
+        FormikControl.js
+        Input.js
+        TextArea.js
+        Select.js
+        Radio.js
+        Checkbox.js
+        TextError.js
+
+/////////////////////////////////////////////////////////////////////////////////
+
+STEP 1 :
+    In Radio.js
+
+    import React from 'react'
+    import {Field,ErrorMessage} from 'formik';
+    import TextError from 'TextError'
+
+    const TextArea = (props) =>{
+        const {label, name, radioOptions ...rest} = props;
+        return (
+            <div className='form-control'>
+                <label>{label}</label>
+                <Field name={name} {...rest}>
+                {
+                    ({field}) => {
+                        console.log(field)
+                        return radioOption.map(option => {
+                            return < key={option.key}>
+                                        <input type='radio'
+                                            id={option.value}
+                                            value={option.value}
+                                            checked={field.value === option.value}
+                                            />
+                                            <label htmlFor={option.key}>{option.key}</label>
+                                    </>
+                        })
+                    }
+                }
+                <Field/>
+                <ErrorMessage name={name} component={TextError}/>
+            </div>
+        )
+    }
+
+    export default TextArea;
+
+    In TextError.js
+
+    import React from 'react'
+    const TextError = props =>{
+        return (
+            <div className='error'>
+                {props.children}
+            </div>
+        )
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+STEP 2  :
+    -> Input component is add to the respective case
+
+In FormikControl.js
+
+import React from 'react';
+import Input from 'Input';
+import TextArea from 'TextArea';
+import Select from 'Select';
+import Radio from 'Radio';
+
+
+const FormikControl = props =>{
+    const { control, ...rest } = props;
+
+    switch(controls) {
+        case 'input' :
+            return <Input {...rest}/>
+        case 'textarea' :  
+            return <TextArea {...rest}/>
+        case 'select' : 
+            return <Select/>
+        case 'radio' : 
+            return <Radio/>
+        case 'checkbox' :
+        case 'date' :
+        default : return null
+    }
+}
+
+export default FormikControl
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+STEP 3
+
+    -> adding the initialValues for email and validation for email and calling the FormikControl component with(control, type, name) props.
+
+    In FormikContainer.js
+
+
+    import React from 'react';
+    import { Formik,Form } from 'Formik'
+    import * as Yup from 'yup';
+    import FormikControl from 'FormikControl';
+    
+    const dropDownOptions = [
+        {key : option1, value : option1},
+        {key : option2, value : option2},
+        {key : option3, value : option3},
+    ];
+
+    const radioOptions = [
+        {key : option1, value : option1},
+        {key : option2, value : option2},
+        {key : option3, value : option3},
+    ];
+
+    const FormikContainer = () =>{
+        const initialvalues = {
+            email : '',
+            description : '',
+            selectOption : '',
+            radioOption ; '',
+        }
+        const validationSchema = Yup.object({
+            email : Yup.string().required('Required')
+            description : Yup.string().required('Required')
+            selectOption : Yup.string().required('Required')
+            radioOption : Yup.string().required('Required')
+        })
+        const onSubmit = values =>{
+            console.log(values);
+        }
+        <Formik
+            initialvalues={initialvalues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+        >
+            {
+                formik => {
+                    <Form>
+                        <FormikControl 
+                            control='input' 
+                            type='email' 
+                            name='email' 
+                            label='Email'
+                            />
+
+                        <FormikControl 
+                            control='textarea'
+                            name='description'
+                            label='Description'
+                            />
+
+                        <FormikControl 
+                            control='select'
+                            name='selectOption'
+                            label='selectOption'
+                            dropDownOptions={dropDownOptions}
+                            />
+
+                        <FormikControl 
+                            control='radio'
+                            name='radioOption'
+                            label='select one Option'
+                            radioOptions={radioOptions}
+                            />
+                        <button type='submit'>Submit</button>
+                    </Form>
+                }
+            }
+        </Formik>
+    }
+
+    export default FormikContainer

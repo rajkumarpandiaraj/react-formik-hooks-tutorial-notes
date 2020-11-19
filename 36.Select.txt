@@ -1,0 +1,159 @@
+                                                36.SELECT
+
+To create form elements, there are three main steps :
+        1.Defining the Field(select)
+        2.Returning that Field in FormikControl
+        3.calling the FormikControl in FormikContainer and  adding the initialValues
+    
+Props Required to the Select field :-
+        1.label = 'Select Option'
+        2.name = 'selectOption'
+        3.dropDownOptions = [{key,value}]
+
+In Components folder
+        FormikContainer.js
+        FormikControl.js
+        Input.js
+        TextArea.js
+        Select.js(new)
+        TextError.js
+
+/////////////////////////////////////////////////////////////////////////////////
+
+STEP 1 :
+    In Select.js
+
+    import React from 'react'
+    import {Field,ErrorMessage} from 'formik';
+    import TextError from 'TextError'
+
+    const TextArea = (props) =>{
+        const {label, name, dropDownOptions ...rest} = props;
+        return (
+            <div className='form-control'>
+                <label htmlFor={name}>{label}</label>
+                <Field as='select' id={name} name={name} {...rest}>
+                {
+                    dropDownOptions.map(option => {
+                        return (
+                            <option key={option.key} value={option.value} >{option.value}</option>
+                        )
+                    })
+                }
+                <Field/>
+                <ErrorMessage name={name} component={TextError}/>
+            </div>
+        )
+    }
+
+    export default TextArea;
+
+    In TextError.js
+
+    import React from 'react'
+    const TextError = props =>{
+        return (
+            <div className='error'>
+                {props.children}
+            </div>
+        )
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+STEP 2  :
+    -> Input component is add to the respective case
+
+In FormikControl.js
+
+import React from 'react';
+import Input from 'Input';
+import TextArea from 'TextArea';
+import Select from 'Select';
+
+const FormikControl = props =>{
+    const { control, ...rest } = props;
+
+    switch(controls) {
+        case 'input' :
+            return <Input {...rest}/>
+        case 'textarea' :  
+            return <TextArea {...rest}/>
+        case 'select' : 
+            return <Select/>
+        case 'radio' :
+        case 'checkbox' :
+        case 'date' :
+        default : return null
+    }
+}
+
+export default FormikControl
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+STEP 3
+
+    -> adding the initialValues for email and validation for email and calling the FormikControl component with(control, type, name) props.
+
+    In FormikContainer.js
+
+
+    import React from 'react';
+    import { Formik,Form } from 'Formik'
+    import * as Yup from 'yup';
+    import FormikControl from 'FormikControl';
+    
+    const dropDownOptions = [
+        {key : option1, value : option1},
+        {key : option2, value : option2},
+        {key : option3, value : option3},
+    ]
+    const FormikContainer = () =>{
+        const initialvalues = {
+            email : '',
+            description : '',
+            selectOption : '',
+        }
+        const validationSchema = Yup.object({
+            email : Yup.string().required('Required')
+            description : Yup.string().required('Required')
+            selectOption : Yup.string().required('Required')
+        })
+        const onSubmit = values =>{
+            console.log(values);
+        }
+        <Formik
+            initialvalues={initialvalues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+        >
+            {
+                formik => {
+                    <Form>
+                        <FormikControl 
+                            control='input' 
+                            type='email' 
+                            name='email' 
+                            label='Email'
+                            />
+
+                        <FormikControl 
+                            control='textarea'
+                            name='description'
+                            label='Description'
+                            />
+
+                        <FormikControl 
+                            control='selct'
+                            name='selectOption'
+                            label='selectOption'
+                            dropDownOptions={dropDownOptions}
+                            />
+                        <button type='submit'>Submit</button>
+                    </Form>
+                }
+            }
+        </Formik>
+    }
+
+    export default FormikContainer

@@ -1,0 +1,20 @@
+                                            28.Disabling the Submit Button
+
+                                            2.FormSubmission in Progress
+
+ -> Disabling the submit btn, while form data is submitting to the server.
+
+ To do that :-
+        use the isSubmitting property in the formik obj.
+        initially, isSubmitting is false, while submitting, it becomes isSubmitting = true, 
+            if there is error in form, again it becomes isSubmitting = false,
+            if there is NO error, isSubmitting = true, we have to manually set isSubmitting =  false in onSubmit Func.
+
+eg :
+    const onSubmit = (values, onSubmitOwnProps) =>{
+        onSubmitOwnProps.setSubmitting(false);
+    }
+    <button type='submit' disabled={formik.isSubmitting}>Submit</button>
+
+Summary of Disabling submit btn :
+    <button type='submit' disabled={! formik.isValid || formik.isSubmitting}>Submit</button>

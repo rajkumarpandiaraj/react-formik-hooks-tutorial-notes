@@ -1,0 +1,19 @@
+                                        31.Reusable Formik Control
+
+FIRST part of the series finished.
+
+In the second part of the series, we gonna see :-
+        1.FormikContainer Component
+        2.FormikControl Component
+        3.Input
+        4.TextArea
+        5.Select
+        6.RadioButton
+        7.Checkboxes
+        8.DatePicker
+using this we gonna build
+        1.Registration Formik
+        2.Login Form
+        3.Course EnrollMent Form
+
+Lastly Ui library with Formik     

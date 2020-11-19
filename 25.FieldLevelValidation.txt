@@ -1,0 +1,192 @@
+                                            25.FIELD LEVEL VALIDATION
+
+Filed Level Validation :-
+        -> It is used to define the validation for particular filed only.
+
+steps :
+    1.  Define the validation function for the field.
+            validation function takes value as its prop which is the value of the particular field value.
+    2.Assign the function as a value of the validate prop and send it with that fieldcomponent.
+    3.add the error component.
+
+EXAMPLES :
+Adding the validation func for the comments field and displaying the error message.
+    
+    1.const validateComments = value =>{
+        let error;
+        if(!value){
+            error = 'Required'
+        }
+        return error
+    } 
+
+    2.<Field as='textarea' id='comments' name='comments'
+            validate={validateComments}/>
+    
+    3.<ErrorMessage name='comments' component={TextError}/>
+
+VALIDATE PROP ALSO AVAILABLE IN FAST FIELD COMPONENT ALSO
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+In YOUTUBE.js
+
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage, FieldArray } from 'formik' //importing
+
+    const YouTubeForm = () =>{
+
+        const initialValues = {
+            name : '',
+            email : '',
+            channel : '',
+            Social : {
+                twitter : '',
+                faceBook : ''
+            },
+            phoneNumber : ['',''],
+            phNumbers
+        }
+
+        const onSubmit = values =>{
+            console.log('form data', values) // log the values of the field at the time of SUBMISSION 
+        }
+
+        const validateComments = value =>{
+             let error;
+             if(!value){
+                 error = 'Required'
+             }
+             return error
+        }
+
+/////////const validate = values => {
+                    let errors = {}
+
+                    if(!values.name){
+                        errors.name = 'required'
+                    }
+
+                    if(!values.email){
+                        errors.email = 'required'
+                    }else if(RegEx.test(values.email)){
+                        errors.email = 'INVALID format'
+                    }
+
+                    if(!values.channel){
+                        errors.channel = 'required'
+                    }
+
+                    return errors
+            }/////////////////////////////////////////////////////////////// Commenting out
+
+            const ValidationSchema = Yup.object({
+                name : Yup.string().required('Required'),
+                email : Yup.string().email('Invalid format').required('Required'),
+                channel : Yup.string().required('Required'),               
+            })
+
+            console.log('Field Visited', formik.touched) // IF WE CLICKED IN THE FILED BOX AND CLICKED OUT THE FILED BOX
+                                                                        IT DISPLAYS true, OTHERWISE IT DISPLAYS FALSE
+        return(
+            <Formik 
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                ValidationSchema={ValidationSchema}
+                validateOnChange ={false}
+                validateOnBlur ={false}>
+                <Form>
+                    <label htmlFor='name'>Name</label>
+                    <Field type='text' id='name' name='name' 
+                    />
+                    <ErrorMessage name='name'/>
+
+
+
+                    <label htmlFor='email'>Name</label>
+                    <Field type='text' id='email' name='email' placeholder='Email'/> //////// additional props
+                    <ErrorMessage name='email' component={TextError}>
+
+
+                    <label htmlFor='channel'>Name</label>
+                    <Field type='text' id='channel' name='channel' 
+                    />
+                    <ErrorMessage name='channel'>
+                        {
+                            errormsg => <div className='error'>{errormsg}</div>
+                        }
+                    </ErrorMessage>
+                    
+                    <label htmlFor='comment'>Comments</label>
+                    <Field as='textarea' id='comments' name='comments'
+                                validate={validateComments}/>
+                    <ErrorMessage name='comments' component={TextError}>
+
+
+                    <label htmlForm='address'>Address</label>  ///////////Render Props method
+                    <Field name='address'>
+                        {
+                            props => {
+                                const {field, form, meta} = props;
+                                console.log('render Props', props);
+                                return <div>
+                                        <input id='address' type='text' {...field}/>
+                                        {meta.touched && meta.error ? <div>{meta.error}</div> : null}
+                                        </div>
+                            }
+                        }
+                    </Field>
+                    
+                    
+                    <label htmlFor='twitter'>twitter</label>
+                    <Field type='text' id='twitter' name='Social.twitter' />
+
+
+                    <label htmlFor='facebook'>faceBook</label>
+                    <Field type='text' id='facebook' name='Social.faceBook' />
+
+                    
+                    <label htmlFor='primary'>PrimaryNumber</label>
+                    <Field type='text' id='primary' name='phoneNumber[0}' />
+
+
+                    <label htmlFor='secondary'>secondary Number</label>
+                    <Field type='text' id='secondary' name='phoneNumber[1]' />
+
+                    <FieldArray name='phNumbers'>
+                            {
+                                fieldArrayProps =>{
+                                    console.log('fieldArrayProps', fieldArrayProps)
+                                    console.log(push, remove, form) = fieldArrayProps
+                                    const { values } = form
+                                    const { phNumbers } = values
+                                    return (
+                                        {
+                                            phNumbers.map((number, index) =>(
+                                                <div key={index}>
+                                                    <Field name={`phNumbers[${index]`}/>
+                                                    {
+                                                        index > 0 && (
+                                                            <button type='button' onClick={() => remove(index)}>
+                                                            {''} -{''}</button>
+                                                        )
+                                                    }
+                                                    <button type='button' onClick={() => push('')}>
+                                                            {''} +{''}</button>
+                                                </div>
+                                            ))
+                                        }
+                                    )
+                                }
+                            }
+                    </FieldArray>
+
+                    <button type='submit' className='btn'>submit</button>
+                </Form>
+            </Formik>
+        )
+    }
+
+

@@ -1,0 +1,88 @@
+                                                16.ERROR MESSAGE COMPONENT
+
+ ErrorMessage component :-
+        -> Error Message component replaces the code used to display the error in previous session
+
+Steps to implement the Error Message Component :
+        1.import the ErrorMessage Component from formik.
+        2.replace error code with ErrorMessage component.
+        3.ErrorMessage take name prop with the value of name of the field.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+In YOUTUBE.js
+
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik' //importing
+
+    const YouTubeForm = () =>{
+
+        const initialValues = {
+            name : '',
+            email : '',
+            channel : ''
+        }
+
+        const onSubmit = values =>{
+            console.log('form data', values) // log the values of the field at the time of SUBMISSION 
+        }
+
+/////////const validate = values => {
+                    let errors = {}
+
+                    if(!values.name){
+                        errors.name = 'required'
+                    }
+
+                    if(!values.email){
+                        errors.email = 'required'
+                    }else if(RegEx.test(values.email)){
+                        errors.email = 'INVALID format'
+                    }
+
+                    if(!values.channel){
+                        errors.channel = 'required'
+                    }
+
+                    return errors
+            }/////////////////////////////////////////////////////////////// Commenting out
+
+            const ValidationSchema = Yup.object({
+                name : Yup.string().required('Required'),
+                email : Yup.string().email('Invalid format').required('Required'),
+                channel : Yup.string().required('Required'),               
+            })
+
+            console.log('Field Visited', formik.touched) // IF WE CLICKED IN THE FILED BOX AND CLICKED OUT THE FILED BOX
+                                                                        IT DISPLAYS true, OTHERWISE IT DISPLAYS FALSE
+        return(
+            <Formik 
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                ValidationSchema={ValidationSchema}
+                >
+                <Form>
+                    <label htmlFor='name'>Name</label>
+                    <Field type='text' id='name' name='name' 
+                    />
+                    <ErrorMessage name='name'/>
+
+
+
+                    <label htmlFor='email'>Name</label>
+                    <Field type='text' id='email' name='email' 
+                    />
+                    <ErrorMessage name='email'/>
+
+
+                    <label htmlFor='channel'>Name</label>
+                    <Field type='text' id='channel' name='channel' 
+                    />
+                    <ErrorMessage name='channel'/>
+
+
+                    <button type='submit' className='btn'>submit</button>
+                </Form>
+            </Formik>
+        )
+    }
